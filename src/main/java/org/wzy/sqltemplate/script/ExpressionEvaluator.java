@@ -1,5 +1,7 @@
 package org.wzy.sqltemplate.script;
 
+import ognl.OgnlContext;
+
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.Map;
  */
 public class ExpressionEvaluator {
 
-	public boolean evaluateBoolean(String expression, Object parameterObject) {
+	public boolean evaluateBoolean(String expression, OgnlContext parameterObject) {
 		Object value = OgnlCache.getValue(expression, parameterObject);
 		if (value instanceof Boolean)
 			return (Boolean) value;
@@ -24,7 +26,7 @@ public class ExpressionEvaluator {
 	}
 
 	public Iterable<?> evaluateIterable(String expression,
-			Object parameterObject) {
+										OgnlContext parameterObject) {
 		Object value = OgnlCache.getValue(expression, parameterObject);
 		if (value == null)
 			throw new RuntimeException("The expression '" + expression

@@ -4,7 +4,7 @@
 
   <groupId>org.wzy</groupId>
   <artifactId>sqltemplate</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.8</version>
   <packaging>jar</packaging>
 
   <name>sqltemplate</name>
@@ -24,9 +24,27 @@
     <dependency>
     	<groupId>ognl</groupId>
     	<artifactId>ognl</artifactId>
-    	<version>3.0.8</version>
+    	<version>3.2.16</version>
+      <exclusions>
+        <!-- 排除javassist-->
+        <exclusion>
+          <groupId>javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    
+
   </dependencies>
-  
+  <distributionManagement>
+    <repository>
+      <id>makepower_release</id>
+      <name>makepower_release</name>
+      <url>http://172.28.92.1:9000/repository/makepower_release/</url>
+    </repository>
+    <snapshotRepository>
+      <id>makepower_snapshots</id>
+      <name>makepower_snapshots</name>
+      <url>http://172.28.92.1:9000/repository/makepower_snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>

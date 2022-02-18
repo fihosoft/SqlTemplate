@@ -4,28 +4,27 @@ import java.io.StringReader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import ognl.ExpressionSyntaxException;
-import ognl.Node;
-import ognl.Ognl;
-import ognl.OgnlException;
-import ognl.OgnlParser;
-import ognl.ParseException;
-import ognl.TokenMgrError;
+import ognl.*;
 
 public class OgnlCache {
 
 	private static final Map<String, ognl.Node> expressionCache = new ConcurrentHashMap<String, ognl.Node>();
 
-	public static Object getValue(String expression, Object root) {
+	public static Object getValue(String expression, OgnlContext context) {
 		try {
-			return Ognl.getValue(parseExpression(expression), root);
+			return parseExpression(expression).getValue(context,context.getValues());
+//			return Ognl.getValue(parseExpression(expression).getAccessor(), context,context.getRoot());
 		} catch (OgnlException e) {
-			throw new RuntimeException("Error evaluating expression '"
-					+ expression + "'. Cause: " + e, e);
+			if(e.getMessage().startsWith("source is null for getProperty")){
+				return null;
+			}else{
+				throw new RuntimeException("Error evaluating expression '"
+						+ expression + "'. Cause: " + e, e);
+			}
 		}
 	}
 
-	private static Object parseExpression(String expression)
+	private static Node parseExpression(String expression)
 			throws OgnlException {
 		try {
 			Node node = expressionCache.get(expression);

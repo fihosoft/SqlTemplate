@@ -2,6 +2,7 @@ package org.wzy.sqltemplate.script;
 
 import java.util.Map;
 
+import ognl.OgnlContext;
 import org.wzy.sqltemplate.Context;
 import org.wzy.sqltemplate.token.GenericTokenParser;
 import org.wzy.sqltemplate.token.TokenHandler;
@@ -37,7 +38,7 @@ public class ForEachFragment implements SqlFragment {
 
 	public boolean apply(Context context) {
 
-		Map<String, Object> bindings = context.getBinding();
+		OgnlContext bindings = context.getBinding();
 		final Iterable<?> iterable = evaluator.evaluateIterable(
 				collectionExpression, bindings);
 		boolean first = true;
@@ -122,7 +123,7 @@ public class ForEachFragment implements SqlFragment {
 		}
 
 		@Override
-		public Map<String, Object> getBinding() {
+		public OgnlContext getBinding() {
 			return delegate.getBinding();
 		}
 
@@ -181,7 +182,7 @@ public class ForEachFragment implements SqlFragment {
 		}
 
 		@Override
-		public Map<String, Object> getBinding() {
+		public OgnlContext getBinding() {
 			return delegate.getBinding();
 		}
 

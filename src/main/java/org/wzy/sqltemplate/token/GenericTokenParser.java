@@ -39,7 +39,10 @@ public class GenericTokenParser {
 						builder.append(src, offset, start - offset);
 						offset = start + openToken.length();
 						String content = new String(src, offset, end - offset);
-						builder.append(handler.handleToken(content));
+						String s = handler.handleToken(content);
+						if(s!=null){
+							builder.append(s);
+						}
 						offset = end + closeToken.length();
 					}
 				}

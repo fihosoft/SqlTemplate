@@ -1,5 +1,7 @@
 package org.wzy.sqltemplate;
 
+import org.wzy.sqltemplate.token.ContextTokenHandler;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,10 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -28,18 +29,22 @@ public class Configuration {
 	private transient boolean cacheTemplate;
 
 	private Charset charset;
+	private List<ContextTokenHandler> handlers;
+
+
 
 	public Configuration() {
-		this(true, Charset.defaultCharset());
+		this(true, Charset.defaultCharset(),null);
 	}
 
-	public Configuration(boolean cacheTemplate, Charset charset) {
+	public Configuration(boolean cacheTemplate, Charset charset,List<ContextTokenHandler> handlers) {
 		super();
 
 		this.cacheTemplate = cacheTemplate;
 		this.charset = charset;
+		this.handlers=handlers;
 
-		templateCache = new ConcurrentHashMap<String, FutureTask<SqlTemplate>>();
+		templateCache = new ConcurrentHashMap<>();
 	}
 
 	public SqlTemplate getTemplate(final String content) {
@@ -138,5 +143,10 @@ public class Configuration {
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
-
+	public List<ContextTokenHandler> getHandlers(){
+		return this.handlers;
+	}
+	public void setHandlers(List<ContextTokenHandler> handlers) {
+		this.handlers = handlers;
+	}
 }

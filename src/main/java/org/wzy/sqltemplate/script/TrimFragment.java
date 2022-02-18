@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import ognl.OgnlContext;
 import org.wzy.sqltemplate.Context;
 
 public class TrimFragment implements SqlFragment {
@@ -119,7 +120,7 @@ public class TrimFragment implements SqlFragment {
 		}
 
 		@Override
-		public Map<String, Object> getBinding() {
+		public OgnlContext getBinding() {
 			return delegate.getBinding();
 		}
 

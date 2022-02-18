@@ -24,6 +24,7 @@ public class TestTemplate {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		map.put("id", "11");
+		map.put("id2", "11");
 
 		SqlMeta process = template.process(map);
 
